@@ -1,0 +1,7 @@
+Frontend:
+
+This directory will contain the UI of the project.
+Stack:
+-React
+-AntDesign
+-Tailwind CSS
