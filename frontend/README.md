@@ -5,6 +5,7 @@ The React + TypeScript frontend for the Job Application Tracker. It contains all
 ## Tech stack
 
 - **React** with **TypeScript** (strict mode)
+- **React Router** in data mode for URLs and navigation
 - **Vite** for the dev server and builds
 - **Tailwind CSS** for layout and spacing
 - **Ant Design** for UI components
@@ -44,7 +45,43 @@ Ant Design provides the UI components (forms, tables, buttons, modals), and Tail
 
 ## Folder structure
 
-To be decided.
+Source files live under `src`.
+
+| Path                         | What it holds                                                              |
+| ---------------------------- | -------------------------------------------------------------------------- |
+| `src/main.tsx`               | Mounts the app and renders the router inside the Ant Design providers     |
+| `src/router.tsx`             | The data-mode route list                                                   |
+| `src/layouts/RootLayout.tsx` | The shared navigation and the slot where the matched page renders         |
+| `src/pages`                  | One component per screen                                                   |
+| `src/types/models.ts`        | Shared types for applications, companies, notes, and documents            |
+| `src/mocks/mockData.ts`      | Sample records for those types                                             |
+| `src/constants/currencies.ts` | The currency codes a salary can use                                       |
+| `src/index.css`              | Tailwind layers and global styles                                          |
+
+## Routing
+
+React Router runs in data mode. Routes are objects passed to `createBrowserRouter` in `src/router.tsx`. `main.tsx` renders that router with `RouterProvider`. The router is created once, outside of a component.
+
+Child paths are added onto `/`. A path segment that starts with `:` is a parameter. `applications/new` is a fixed path, so it is not treated as an application id. `*` matches any URL the other routes do not.
+
+| URL                                  | Page                 | File                                |
+| ------------------------------------ | -------------------- | ----------------------------------- |
+| `/`                                  | Dashboard            | `src/pages/Dashboard.tsx`           |
+| `/login`                             | Login                | `src/pages/LoginPage.tsx`           |
+| `/sign-up`                           | Sign-up              | `src/pages/SignUpPage.tsx`          |
+| `/applications`                      | Applications list    | `src/pages/ApplicationsList.tsx`    |
+| `/applications/new`                  | Add application      | `src/pages/AddApplication.tsx`      |
+| `/applications/:applicationId`       | Application detail   | `src/pages/ApplicationDetail.tsx`   |
+| `/applications/:applicationId/edit`  | Edit application     | `src/pages/EditApplication.tsx`     |
+| Any other URL                        | Not found            | `src/pages/NotFound.tsx`            |
+
+The detail and edit pages read `applicationId` from the URL with `useParams`. A link uses a real id, for example `/applications/application-1`, not the `:applicationId` placeholder.
+
+## Layout
+
+Every route is a child of `/`, whose component is `RootLayout`. The layout renders a `nav` of `Link`s and an `Outlet`. The outlet is where the matched page appears, so the navigation stays in place while the page changes.
+
+Tailwind classes on the `nav` and each `Link` set the bar colour, padding, and hover state. Those classes space the links. They do not restyle an Ant Design component.
 
 ## Styling approach
 
