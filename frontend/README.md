@@ -44,4 +44,44 @@ Ant Design provides the UI components (forms, tables, buttons, modals), and Tail
 
 ## Folder structure
 
-_To be documented once the `src` structure is decided (Phase 1, step 6)._
+To be decided.
+
+## Styling approach
+
+This project uses **Ant Design** and **Tailwind CSS** together, with a clear split between them.
+
+### Responsibilities
+
+| Concern             | Tool                    | Examples                                            |
+| ------------------- | ----------------------- | --------------------------------------------------- |
+| UI components       | Ant Design              | Buttons, forms, inputs, tables, modals, tags, menus |
+| Brand look and feel | Ant Design theme tokens | Primary color, border radius, font family           |
+| Page layout         | Tailwind                | Flexbox and grid, page structure, alignment         |
+| Spacing             | Tailwind                | Margins and padding around and between components   |
+| Responsiveness      | Tailwind                | Breakpoint-based layout changes                     |
+| Custom elements     | Tailwind                | Anything not built from an Ant Design component     |
+
+### Rules
+
+- **Use Ant Design components first.** If Ant Design provides a component, use it rather than building one from scratch.
+- **Don't restyle Ant Design components with Tailwind.** Change their appearance through theme tokens instead, so all states (hover, focus, disabled, active) stay consistent.
+- **Tailwind may position Ant Design components**, for example adding margins or placing them in a flex or grid layout, but not change how they look.
+- **Brand colors and visual settings live in the Ant Design theme configuration**, not in individual component styles.
+
+### How the two coexist
+
+Tailwind's base styles (preflight) can override Ant Design's component styles. To prevent this, the project uses CSS cascade layers, declared in `index.css` in this order:
+
+1. `theme` – Tailwind's theme variables
+2. `base` – Tailwind's preflight reset
+3. `antd` – Ant Design's component styles
+4. `components` – reserved for custom component styles
+5. `utilities` – Tailwind's utility classes
+
+Later layers take priority. Ant Design therefore overrides Tailwind's reset, while Tailwind's utility classes can still override Ant Design when applied directly.
+
+Ant Design generates its styles at runtime, so the app is wrapped in a `StyleProvider` (from `@ant-design/cssinjs`) with layering enabled in `main.tsx`. This outputs Ant Design's styles into the `antd` layer. `@ant-design/cssinjs` must stay on the same major version that Ant Design depends on.
+
+### Brand colors
+
+For time being, the primary colour is set to #6b2b3a.
