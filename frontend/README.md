@@ -1,75 +1,47 @@
-# React + TypeScript + Vite
+# Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+The React + TypeScript frontend for the Job Application Tracker. It contains all UI screens, including login, the dashboard and application management.
 
-Currently, two official plugins are available:
+## Tech stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React** with **TypeScript** (strict mode)
+- **Vite** for the dev server and builds
+- **Tailwind CSS** for layout and spacing
+- **Ant Design** for UI components
+- **ESLint** for linting, with **eslint-config-prettier** to avoid conflicts with Prettier
+- **Prettier** for code formatting
 
-## React Compiler
+## Getting started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js (LTS version)
+- npm (included with Node.js)
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Setup
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+1. Clone the repository and open the `frontend` folder in a terminal.
+2. Install dependencies with npm's clean install command, which installs the exact versions recorded in `package-lock.json`.
+3. Start the dev server using the `dev` script, then open the local URL shown in the terminal.
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+### Available scripts
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+| Script    | What it does                                                     |
+| --------- | ---------------------------------------------------------------- |
+| `dev`     | Starts the local dev server with hot module replacement          |
+| `build`   | Type-checks the project and builds it for production into `dist` |
+| `preview` | Serves the production build locally for testing                  |
+| `lint`    | Runs ESLint across the project                                   |
 
-```
+## Code style
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+- Formatting is handled by Prettier, configured in `.prettierrc.json`. Format on save is enabled through the shared workspace settings.
+- ESLint handles code-quality checks. Style rules that would conflict with Prettier are switched off by `eslint-config-prettier`.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## Styling approach
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+Ant Design provides the UI components (forms, tables, buttons, modals), and Tailwind handles layout and spacing around them. Brand colors are set through Ant Design's theme configuration rather than by overriding its styles.
 
-```
+## Folder structure
+
+_To be documented once the `src` structure is decided (Phase 1, step 6)._
